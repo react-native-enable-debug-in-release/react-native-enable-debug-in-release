@@ -1,6 +1,6 @@
 {
   "name": "react-native-enable-debug-in-release",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enable Debug mode for Release configurations for both iOS and Android of React Native applications",
   "main": "index.js",
   "bin": "index.js",
