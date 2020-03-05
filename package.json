@@ -1,0 +1,25 @@
+{
+  "name": "react-native-enable-debug-in-release",
+  "version": "1.0.0",
+  "description": "Enable Debug mode for Release configurations for both iOS and Android of React Native applications",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "react-native",
+    "debug",
+    "release",
+    "development",
+    "menu"
+  ],
+  "author": "react-native-enable-debug-in-release",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release/issues"
+  },
+  "homepage": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release#readme"
+}
