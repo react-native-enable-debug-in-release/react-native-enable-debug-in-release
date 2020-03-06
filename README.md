@@ -46,4 +46,4 @@ Alternatively, create a special branch in a code repository that you will not me
 # Shaking devices
 
 Use the following module if you want to open Develoepr Menu without shake.
-- [react-native-open-developer-menu](https://github.com/react-native-open-developer-menu/react-native-open-developer-menu])
+- [react-native-open-developer-menu](https://github.com/react-native-open-developer-menu/react-native-open-developer-menu)
