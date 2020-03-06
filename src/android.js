@@ -1,23 +1,23 @@
-const path = require('path');
 const {logger} = require('@react-native-community/cli-tools');
+const {projectConfig} = require('@react-native-community/cli-platform-android');
 const {readFile, writeFile} = require('./libs/fs');
 
-const run = (basePath, bundleIdentifier) => {
+const run = basePath => {
   logger.info('Step: Android');
-  allowClearTextHttpTraffic(basePath);
-  forceDeveloperSupportEnabled(basePath, bundleIdentifier);
+  const {manifestPath, mainFilePath} = projectConfig(basePath);
+  allowClearTextHttpTraffic(manifestPath);
+  forceDeveloperSupportEnabled(mainFilePath);
 };
 
 /**
- * This method modifies AndroidManifest.xml file to allow Cleartext Traffic (HTTP instead of HTTPS) in Release configuration
+ * Modifies AndroidManifest.xml file to allow Cleartext Traffic (HTTP instead of HTTPS) in Release configuration
  * Unfortunately, this is necessary, because right now React Native mobile application supports connecting to Metro Bundler using HTTP traffic only ("http" and "ws" hardcoded).
  * @see getWebsocketProxyURL - https://github.com/facebook/react-native/blob/48001c597eba1c9f4eafb6b47e0b9f758e6c424f/ReactAndroid/src/main/java/com/facebook/react/devsupport/DevServerHelper.java#L360
  * @see createBundleURL - https://github.com/facebook/react-native/blob/48001c597eba1c9f4eafb6b47e0b9f758e6c424f/ReactAndroid/src/main/java/com/facebook/react/devsupport/DevServerHelper.java#L427
- * @param {String} basePath 
+ * @param {String} manifestPath - path to AndroidManifest.xml file
  */
-const allowClearTextHttpTraffic = basePath => {
-  const fullpath = path.resolve(basePath, 'android', 'app', 'src' , 'main', 'AndroidManifest.xml');
-  let content = readFile(fullpath);
+const allowClearTextHttpTraffic = manifestPath => {
+  let content = readFile(manifestPath);
 
   if (content.includes('android:usesCleartextTraffic')) {
       if (content.includes('android:usesCleartextTraffic="true"')) {
@@ -26,17 +26,19 @@ const allowClearTextHttpTraffic = basePath => {
       }
       content = content.replace('android:usesCleartextTraffic="false"', 'android:usesCleartextTraffic="true"');
   } else {
-      content = content.replace('<application', '<application android:usesCleartextTraffic="true"');
+      content = content.replace('<application', '<application\n      android:usesCleartextTraffic="true"');
   }
 
-  writeFile(fullpath, content);
+  writeFile(manifestPath, content);
   logger.success(' - Android - [DONE] cleartext (http) traffic enabled');
 };
 
-const forceDeveloperSupportEnabled = (basePath, bundleIdentifier) => {
-  const fullpath = path.resolve(basePath, 'android', 'app', 'src' , 'main', 'java', ...(bundleIdentifier.split('.')), 'MainApplication.java');
-  const content = readFile(fullpath);
-
+/**
+ * Modifies getUseDeveloperSupport() method in MainApplication.java file to force return true always
+ * @param {String} mainFilePath - path to MainApplication.java file
+ */
+const forceDeveloperSupportEnabled = mainFilePath => {
+  const content = readFile(mainFilePath);
   const replaceSearch = 'return BuildConfig.DEBUG;';
 
   if (!content.includes(replaceSearch) && content.includes('public boolean getUseDeveloperSupport() {')) {
@@ -44,7 +46,7 @@ const forceDeveloperSupportEnabled = (basePath, bundleIdentifier) => {
       return;
   }
   const nextContent = content.replace(replaceSearch, 'return true;');
-  writeFile(fullpath, nextContent);
+  writeFile(mainFilePath, nextContent);
   logger.success(' - Android - [DONE] Developer Support enabled');
 };
 

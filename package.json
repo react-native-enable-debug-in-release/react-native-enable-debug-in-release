@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release#readme",
   "dependencies": {
+    "@react-native-community/cli-platform-android": "^4.2.3",
     "@react-native-community/cli-tools": "^4.2.2"
   }
 }
