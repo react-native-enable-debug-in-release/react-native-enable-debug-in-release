@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release/issues"
   },
-  "homepage": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release#readme"
+  "homepage": "https://github.com/react-native-enable-debug-in-release/react-native-enable-debug-in-release#readme",
+  "dependencies": {
+    "@react-native-community/cli-tools": "^4.2.2"
+  }
 }

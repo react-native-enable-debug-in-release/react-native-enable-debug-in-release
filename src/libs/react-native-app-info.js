@@ -1,12 +1,18 @@
 const path = require('path');
+const {logger} = require('@react-native-community/cli-tools');
 const {readFile} = require('./fs');
 
 const getApplicationInfo = () => {
   const basePath = getBasePath();
   const packageJsonInfo = getPackageJsonInfo(basePath);
+
+  if (!packageJsonInfo) {
+    return false;
+  }
   
   if (!packageJsonInfo.dependencies || !packageJsonInfo.dependencies['react-native']) {
-    throw Error('Run command from root directory of your react native application (where package.json located and contains dependency on react-native)');
+    logger.error('Run command from root directory of your react native application (where package.json located and contains dependency on react-native)');
+    return false;
   }
 
   const bundleIdentifier = getBundleIdentifier(basePath);
@@ -30,7 +36,8 @@ const getPackageJsonInfo = basePath => {
   try {
     info = JSON.parse(readFile(filename));
   } catch (e) {
-    throw Error('Run command from root directory of your react native application (where package.json located)');
+    logger.error('Run command from root directory of your react native application (where package.json located)');
+    return false;
   }
   return info;
 };
