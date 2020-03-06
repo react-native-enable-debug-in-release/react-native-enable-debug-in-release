@@ -3,6 +3,8 @@
 const {run: runAndroid} = require('./src/android');
 const {run: runiOS} = require('./src/ios');
 
-const basePath = process.cwd();
+const [argBasePath] = process.argv.slice(2);
+const basePath = argBasePath || process.cwd();
+
 runAndroid(basePath);
 runiOS(basePath);
