@@ -2,10 +2,10 @@ const path = require('path');
 const {logger} = require('@react-native-community/cli-tools');
 const {readFile, writeFile} = require('./libs/fs');
 
-const runAndroid = ({basePath, projectCodeName, bundleIdentifier}) => {
+const run = (basePath, bundleIdentifier) => {
   logger.info('Step: Android');
   allowClearTextHttpTraffic(basePath);
-  forceDeveloperSupportEnabled();
+  forceDeveloperSupportEnabled(basePath, bundleIdentifier);
 };
 
 /**
@@ -49,7 +49,7 @@ const forceDeveloperSupportEnabled = (basePath, bundleIdentifier) => {
 };
 
 module.exports = {
-  runAndroid,
+  run,
   allowClearTextHttpTraffic,
   forceDeveloperSupportEnabled,
 };
