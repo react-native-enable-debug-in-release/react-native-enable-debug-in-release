@@ -15,12 +15,10 @@ const getApplicationInfo = () => {
     return false;
   }
 
-  const bundleIdentifier = getBundleIdentifier(basePath);
   const projectCodeName = getProjectCodeName(basePath);
 
   return {
     basePath,
-    bundleIdentifier,
     projectCodeName,
   }
 
@@ -40,13 +38,6 @@ const getPackageJsonInfo = basePath => {
     return false;
   }
   return info;
-};
-
-const getBundleIdentifier = basePath => {
-  const filename = path.resolve(basePath, 'android', 'app', 'build.gradle');
-  const gradleContent = readFile(filename);
-  const [, bundleIdentifier] = gradleContent.match(/applicationId\s+"?(.*?)"?\s/i);
-  return bundleIdentifier;
 };
 
 const getProjectCodeName = basePath => {
