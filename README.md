@@ -45,4 +45,5 @@ Alternatively, create a special branch in a code repository that you will not me
 
 # Shaking devices
 
-If you cannot shake device to open Developer Menu, you need additional tool that will open Developer Menu.
+Use the following module if you want to open Develoepr Menu without shake.
+- [react-native-open-developer-menu](https://github.com/react-native-open-developer-menu/react-native-open-developer-menu])
